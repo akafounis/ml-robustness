@@ -10,11 +10,11 @@ First we have to find a way to create an adversarial example. An adversarial exa
 
 1. L_2 bounded attacks:
 
-First, we have to craft adversarial pertrubations that have a L_2 norm of ||x_pertr - x|| = epsilon, with epsilon being a given radius(here epsilon = 5).
+First, we have to craft adversarial pertrubations that have a L_2 norm of |x_pertr - x| = epsilon, with epsilon being a given radius(here epsilon = 5).
 
 2. L_infinity bounded attacks
 
-Following, we craft adversarial pertrubations with L_infinity norm of ||x_pertr - x|| < epsilon (here epsilon = 0.3)
+Following, we craft adversarial pertrubations with L_infinity norm of |x_pertr - x| < epsilon (here epsilon = 0.3)
 
 We implemented a fast gradient attack and trained our model. 
 
