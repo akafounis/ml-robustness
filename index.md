@@ -1,37 +1,68 @@
-## Welcome to GitHub Pages
+<img src="sentsent.png" width="600">
 
-You can use the [editor on GitHub](https://github.com/akafounis/ml-robustness/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+A machine learning model is robust if certain criteria are met. For example, a model is robust if for an image of a cat it predicts that it is indeed a cat, but also if we add a small amount of noise in the same input image, then the model should still deliver the same prediction.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+**Creating Adversarial Examples** 
 
-```markdown
-Syntax highlighted code block
+First we have to find a way to create an adversarial example. An adversarial example is an input of the neural network that results in an incorrect prediction. We are going to use two different bounded attacks:
 
-# Header 1
-## Header 2
-### Header 3
+1. L_2 bounded attacks:
 
-- Bulleted
-- List
+First, we have to craft adversarial pertrubations that have a L_2 norm of ||x_pertr - x|| = epsilon, with epsilon being a given radius(here epsilon = 5).
 
-1. Numbered
-2. List
+2. L_infinity bounded attacks
 
-**Bold** and _Italic_ and `Code` text
+Following, we craft adversarial pertrubations with L_infinity norm of ||x_pertr - x|| < epsilon (here epsilon = 0.3)
 
-[Link](url) and ![Image](src)
-```
+We implemented a fast gradient attack and trained our model. 
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Visualization of the created adversarial examples and the prediction of our model on them:
 
-### Jekyll Themes
+<img src="sentsent.png" width="400">
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/akafounis/ml-robustness/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+The prertrubet accuracy with the L_2 bounded attack is: **9,7%**
 
-### Support or Contact
+and
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+The prertrubet accuracy with the L_infinity bounded attack is: **2,7%**
+
+**Adversarial Training**
+
+Now, our goal is to perform adversarial training on our CNN model. This means that we are going to train our model based on the prediction that it does on the pertrubed images. We are going to use only the L_2 bounded attack for our training.
+
+Results:
+
+<img src="training_results.png" width="400">
+
+
+Accuracy of the model without considering the attacks: **96,53%**
+
+
+Accuracy of the model with the attacks: **94,59%**
+
+
+  
+**Certified Adversarial Robustness via Randomized Smoothing** 
+
+Here, we want to train a smooth classifier via the principle of randomized smoothing.  Randomized smoothing is a method for constructing a new, “smoothed” classifier from an arbitrary base classifier. (for more details see https://arxiv.org/pdf/1902.02918.pdf)
+  
+![alt text](result.png)
+
+
+
+**Final Comparison**
+Here, we are comparing the robustness of the different training types that we used (normal training, adversarial training and randomized smoothing training) and the results are the following:
+
+```normal  training: correct_certified 974, avg. certifiable radius: 2.0746```
+
+```adversarial training: correct_certified 1870, avg. certifiable radius: 0.8292```
+
+```randomized smoothing training: correct_certified 7684, avg. certifiable radius: 0.9430```
+
+We conclude that the robust training via randomized smoothing leads to the best robustness of the model.
+
+
+
+**PyTorch** was used for the development of the model.
