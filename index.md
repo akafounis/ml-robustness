@@ -1,4 +1,4 @@
-<img src="sentsent.png" width="600">
+<img src="robustness.png" width="600">
 
 A machine learning model is robust if certain criteria are met. For example, a model is robust if for an image of a cat it predicts that it is indeed a cat, but also if we add a small amount of noise in the same input image, then the model should still deliver the same prediction.
 
@@ -20,7 +20,7 @@ We implemented a fast gradient attack and trained our model.
 
 Visualization of the created adversarial examples and the prediction of our model on them:
 
-<img src="sentsent.png" width="400">
+<img src="creating-adv-ex.png" width="400">
 
 The prertrubet accuracy with the L_2 bounded attack is: **9,7%**
 
@@ -34,7 +34,7 @@ Now, our goal is to perform adversarial training on our CNN model. This means th
 
 Results:
 
-<img src="training_results.png" width="400">
+<img src="training_result.png" width="400">
 
 
 Accuracy of the model without considering the attacks: **96,53%**
@@ -48,11 +48,12 @@ Accuracy of the model with the attacks: **94,59%**
 
 Here, we want to train a smooth classifier via the principle of randomized smoothing.  Randomized smoothing is a method for constructing a new, “smoothed” classifier from an arbitrary base classifier. (for more details see https://arxiv.org/pdf/1902.02918.pdf)
   
-![alt text](result.png)
+![alt text](SmoothedClassifier.png)
 
 
 
 **Final Comparison**
+
 Here, we are comparing the robustness of the different training types that we used (normal training, adversarial training and randomized smoothing training) and the results are the following:
 
 ```normal  training: correct_certified 974, avg. certifiable radius: 2.0746```
